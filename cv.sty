@@ -1,0 +1,160 @@
+\ProvidesPackage{cv}
+
+
+%%% Import packages
+
+% Also using features from KOMA Script. This package is automatically imported
+% by using scrartcl document class.
+
+% Easy set up of page layout
+\usepackage[verbose]{geometry}
+% Printing URL-s
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+% Use Lato font
+\usepackage{lato}
+\usepackage{enumitem}
+% For consistent styling of endings: 1st, 2nd, 3rd, 4th etc.
+\usepackage[super]{nth}
+
+
+%%% Meta information
+
+\title{CV of Robert J.\ Kusznier}
+\author{Robert J.\ Kusznier}
+\date{}
+
+
+%%% Style
+
+% Main options normally specified along with the class
+\KOMAoptions{
+    fontsize=10pt,
+    parskip=full,
+}
+
+% Geometry of the page
+\geometry{
+    letterpaper,
+    hmargin=26mm,
+    vmargin={26mm, 38mm},
+}
+
+% Empty header and footer
+\pagestyle{plain}
+
+% Set default font family
+\renewcommand{\familydefault}{\sfdefault}
+
+\RedeclareSectionCommand
+    [beforeskip=-1.0\baselineskip, afterskip=0.5\baselineskip]
+    {section}
+
+% Add horizontal rule to section
+% \sectionfont{
+%     \sectionrule{-8pt}{1pt}{0mm}{0mm}
+% }
+\makeatletter
+\renewcommand{\sectionlinesformat}[4]{%
+\ifstr{#1}{section}{%
+    \parbox[t]{\linewidth}{%
+      \raggedsection\@hangfrom{\hskip #2#3}{#4}\par%
+      \kern-.75\ht\strutbox\rule{\linewidth}{.8pt}%
+    }%
+  }{%
+    \@hangfrom{\hskip #2#3}{#4}}% 
+}
+\makeatother
+
+% Remove section numbers
+\renewcommand*{\sectionformat}{}
+
+% Don't style links with mono spaced fonts
+\urlstyle{same}
+
+
+%%% New commands and environments
+
+% Title of the document
+%
+% Arguments:
+% 1: Title
+\newcommand{\documenttitle}[1]{
+    {
+        \raggedleft
+        \bfseries
+        \LARGE
+        #1
+        \par
+    }
+}
+
+% List creating layout of each section
+\newenvironment
+    {sectionlist}
+    {
+        \begin{description}[
+            align=right,
+            labelwidth=42mm,
+            labelsep=6mm,
+            leftmargin=48mm,
+            itemsep=2mm,
+            parsep=0mm
+        ]
+    }
+    {
+        \end{description}
+    }
+
+% Single item (child) of section list
+%
+% Arguments:
+% 1: Subsection title
+% 2: Subsection contents
+\newcommand{\sectionlistitem}[2]{
+    \item[
+        % Extra environment needed to properly parse [arg] to parbox
+        {
+            % 0mm height, so that it doesn't affect the layout by
+            % increasing the line height
+            \parbox[t][0mm]{42mm}{
+                \raggedleft
+                #1
+            }
+        }
+    ] #2
+}
+
+% Special type of \sectionlistitem, which is a job description
+%
+% Arguments:
+% 1: Job date
+% 2: Job position
+% 3: Company name
+% 4: Company location
+% 5: Description (rest of contents)
+\newcommand{\sectionlistitemjob}[5]{
+    \sectionlistitem
+        {#1}
+        {
+            \textbf{#2} at \textbf{#3} (\emph{#4})
+            #5
+            \vspace{2mm}
+        }
+}
+
+% List listing details of one job
+\newenvironment
+    {joblisting}
+    {
+        \begin{itemize}[
+            topsep=1.5mm,
+            labelwidth=4mm,
+            labelsep=2mm,
+            leftmargin=6mm,
+            itemsep=1.5mm,
+            parsep=0mm
+        ]
+    }
+    {
+        \end{itemize}
+    }
