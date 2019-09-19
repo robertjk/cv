@@ -1,5 +1,5 @@
-CV of Robert Kusznier
-=====================
+CV
+==
 
 This is my personal CV. It's written in LaTeX.
 
