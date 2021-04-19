@@ -12,6 +12,7 @@
 \usepackage[colorlinks=true,urlcolor=blue]{hyperref}
 % Use Lato font
 \usepackage{lato}
+% Extends styling options for lists
 \usepackage{enumitem}
 % For consistent styling of endings: 1st, 2nd, 3rd, 4th etc.
 \usepackage[super]{nth}
@@ -35,8 +36,8 @@
 % Geometry of the page
 \geometry{
     letterpaper,
-    hmargin=26mm,
-    vmargin={24mm, 38mm},
+    hmargin=25mm,
+    vmargin={25mm, 38mm},
 }
 
 % Empty header and footer
@@ -46,7 +47,7 @@
 \renewcommand{\familydefault}{\sfdefault}
 
 \RedeclareSectionCommand
-    [beforeskip=-0.9\baselineskip, afterskip=0.5\baselineskip]
+    [beforeskip=-0.7\baselineskip, afterskip=0.5\baselineskip, font=\large]
     {section}
 
 % Add horizontal rule to section
@@ -61,7 +62,7 @@
       \kern-.75\ht\strutbox\rule{\linewidth}{.8pt}%
     }%
   }{%
-    \@hangfrom{\hskip #2#3}{#4}}% 
+    \@hangfrom{\hskip #2#3}{#4}}%
 }
 \makeatother
 
@@ -142,11 +143,15 @@
         }
 }
 
+\usepackage{graphicx}
+\newcommand{\bulletsmall}[1][0.7]{\mathbin{\vcenter{\hbox{\scalebox{#1}{$\bullet$}}}}}
+
 % List listing details of one job
 \newenvironment
     {joblisting}
     {
         \begin{itemize}[
+            label=$\bulletsmall$,
             topsep=1.5mm,
             labelwidth=4mm,
             labelsep=2mm,
