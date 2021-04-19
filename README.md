@@ -11,6 +11,12 @@ Requirements
 
 For building LaTeX sources LaTeX installation with XeLaTex is necessary.
 
+On Arch the following packages are needed:
+
+- `texlive-core`
+- `texlive-latexextra`
+- `texlive-fontsextra`
+
 Build
 -----
 
