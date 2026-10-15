@@ -122,6 +122,23 @@
     }
 }
 
+% Subtitle of the document, displayed right below the title
+%
+% Arguments:
+% 1: Subtitle
+\newcommand{\documentsubtitle}[1]{
+    \vspace{-1.5mm}
+    {
+        \raggedleft
+        % Medium weight (500) sits between regular text and the bold title
+        \fontseries{mb}
+        \fontsize{11}{13.5}\selectfont
+        #1
+        \par
+    }
+    \vspace{-2.5mm}
+}
+
 % List creating layout of each section
 \newenvironment
     {sectionlist}
