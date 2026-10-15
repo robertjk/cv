@@ -5,7 +5,8 @@ SOURCE_NAME_PREFIX = cv
 
 all:
 	# Need to be at the same line, as Makefile doesn't handle cd command normally
-	cd src/; xelatex ${SOURCE_NAME_PREFIX}.tex
+	# Fail on the first error instead of waiting for keyboard input
+	cd src/; xelatex -interaction=nonstopmode -halt-on-error ${SOURCE_NAME_PREFIX}.tex
 	mv src/${SOURCE_NAME_PREFIX}.pdf ${TARGET_FILENAME}
 	
 clean:
