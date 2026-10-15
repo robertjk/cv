@@ -13,8 +13,8 @@
 \definecolor{linkblue}{HTML}{2858B0}
 % Printing URL-s
 \usepackage[colorlinks=true,urlcolor=linkblue]{hyperref}
-% Use Lato font
-\usepackage{lato}
+% Font loading by file, for XeLaTeX
+\usepackage{fontspec}
 % Extends styling options for lists
 \usepackage{enumitem}
 % For consistent styling of endings: 1st, 2nd, 3rd, 4th etc.
@@ -35,17 +35,49 @@
 }
 
 % Geometry of the page
+%
+% The footer (page number) is centered vertically in the bottom margin: half of
+% the margin plus half of the digit height (~2.3mm) gives the distance from the
+% bottom of the text to the page number baseline.
+\newlength{\cvbottommargin}
+\setlength{\cvbottommargin}{28mm}
+\newlength{\cvfootskip}
+\setlength{\cvfootskip}{\dimexpr 0.5\cvbottommargin + 1.15mm\relax}
 \geometry{
     letterpaper,
     hmargin=25mm,
-    vmargin={25mm, 38mm},
+    vmargin={25mm, \cvbottommargin},
+    footskip=\cvfootskip,
 }
+
+% Use EB Garamond (SIL Open Font License) for all text. The font files live in the
+% repo (fonts/EBGaramond), so the build does not depend on installed fonts. KOMA
+% headings use the sans family, so the main and sans families are both set to it.
+% Scale 1.097 makes its capital height match the sizes the layout was tuned with.
+% The Medium weight is used for the subtitle (series "mb").
+\setmainfont{EBGaramond-Regular}[
+    Path=../fonts/EBGaramond/,
+    Extension=.ttf,
+    Scale=1.097,
+    UprightFont=EBGaramond-Regular,
+    ItalicFont=EBGaramond-Italic,
+    BoldFont=EBGaramond-Bold,
+    BoldItalicFont=EBGaramond-BoldItalic,
+    FontFace={mb}{n}{EBGaramond-Medium},
+]
+\setsansfont{EBGaramond-Regular}[
+    Path=../fonts/EBGaramond/,
+    Extension=.ttf,
+    Scale=1.097,
+    UprightFont=EBGaramond-Regular,
+    ItalicFont=EBGaramond-Italic,
+    BoldFont=EBGaramond-Bold,
+    BoldItalicFont=EBGaramond-BoldItalic,
+    FontFace={mb}{n}{EBGaramond-Medium},
+]
 
 % Empty header and footer
 \pagestyle{plain}
-
-% Set default font family
-\renewcommand{\familydefault}{\sfdefault}
 
 \RedeclareSectionCommand
     [beforeskip=-0.7\baselineskip, afterskip=0.5\baselineskip, font=\large]
