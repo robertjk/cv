@@ -1,0 +1,31 @@
+% Page layout
+
+\ProvidesPackage{style/layout}
+
+% Easy set up of page layout
+\RequirePackage[verbose]{geometry}
+
+% Main options normally specified along with the class
+\KOMAoptions{
+    fontsize=10pt,
+    parskip=full,
+}
+
+% Geometry of the page
+%
+% The footer (page number) is centered vertically in the bottom margin: half of
+% the margin plus half of the digit height (~2.3mm) gives the distance from the
+% bottom of the text to the page number baseline.
+\newlength{\cvbottommargin}
+\setlength{\cvbottommargin}{28mm}
+\newlength{\cvfootskip}
+\setlength{\cvfootskip}{\dimexpr 0.5\cvbottommargin + 1.15mm\relax}
+\geometry{
+    letterpaper,
+    hmargin=25mm,
+    vmargin={25mm, \cvbottommargin},
+    footskip=\cvfootskip,
+}
+
+% Empty header and footer
+\pagestyle{plain}

@@ -1,0 +1,123 @@
+% Extensions to LaTeX: the commands and environments that the document is
+% written with
+
+\ProvidesPackage{style/extensions}
+
+% Extends styling options for lists
+\RequirePackage{enumitem}
+
+% For scaling the bullet of job listings
+\RequirePackage{graphicx}
+
+% Title of the document
+%
+% Arguments:
+% 1: Title
+\newcommand{\documenttitle}[1]{
+    {
+        \raggedleft
+        \bfseries
+        \LARGE
+        #1
+        \par
+    }
+}
+
+% Subtitle of the document, displayed right below the title
+%
+% Arguments:
+% 1: Subtitle
+\newcommand{\documentsubtitle}[1]{
+    \vspace{-1.5mm}
+    {
+        \raggedleft
+        % Medium weight (500) sits between regular text and the bold title
+        \fontseries{mb}
+        \fontsize{11}{13.5}\selectfont
+        #1
+        \par
+    }
+    \vspace{-2.5mm}
+}
+
+% Width of the left column of a section list (dates, subsection titles), and the
+% space between it and the contents. Used by the list and by the item labels, so
+% that they always stay consistent.
+\newlength{\sectionlabelwidth}
+\setlength{\sectionlabelwidth}{42mm}
+\newlength{\sectionlabelsep}
+\setlength{\sectionlabelsep}{6mm}
+
+% List creating layout of each section
+\newenvironment
+    {sectionlist}
+    {
+        \begin{description}[
+            align=right,
+            labelwidth=\sectionlabelwidth,
+            labelsep=\sectionlabelsep,
+            leftmargin=\dimexpr\sectionlabelwidth+\sectionlabelsep\relax,
+            itemsep=2mm,
+            parsep=0mm
+        ]
+    }
+    {
+        \end{description}
+    }
+
+% Single item (child) of section list
+%
+% Arguments:
+% 1: Subsection title
+% 2: Subsection contents
+\newcommand{\sectionlistitem}[2]{
+    \item[
+        % Extra environment needed to properly parse [arg] to parbox
+        {
+            % 0mm height, so that it doesn't affect the layout by
+            % increasing the line height
+            \parbox[t][0mm]{\sectionlabelwidth}{
+                \raggedleft
+                #1
+            }
+        }
+    ] #2
+}
+
+% Special type of \sectionlistitem, which is a job description
+%
+% Arguments:
+% 1: Job date
+% 2: Job position
+% 3: Company name
+% 4: Company location
+% 5: Description (rest of contents)
+\newcommand{\sectionlistitemjob}[5]{
+    \sectionlistitem
+        {#1}
+        {
+            \textbf{#2} at \textbf{#3} (\emph{#4})
+            #5
+            \vspace{2mm}
+        }
+}
+
+\newcommand{\bulletsmall}[1][0.7]{\mathbin{\vcenter{\hbox{\scalebox{#1}{$\bullet$}}}}}
+
+% List listing details of one job
+\newenvironment
+    {joblisting}
+    {
+        \begin{itemize}[
+            label=$\bulletsmall$,
+            topsep=1.5mm,
+            labelwidth=4mm,
+            labelsep=2mm,
+            leftmargin=6mm,
+            itemsep=1.5mm,
+            parsep=0mm
+        ]
+    }
+    {
+        \end{itemize}
+    }

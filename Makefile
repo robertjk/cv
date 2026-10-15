@@ -1,7 +1,7 @@
 # Building LaTeX CV
 
 TARGET_FILENAME = robert-kusznier-cv.pdf
-SOURCE_NAME_PREFIX = cv
+SOURCE_NAME_PREFIX = main
 
 all:
 	# Need to be at the same line, as Makefile doesn't handle cd command normally

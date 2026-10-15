@@ -1,0 +1,32 @@
+% Typography: which fonts the document uses
+
+\ProvidesPackage{style/typography}
+
+% Font loading by file, for XeLaTeX
+\RequirePackage{fontspec}
+
+% Use EB Garamond (SIL Open Font License) for all text. The font files live in the
+% repo (fonts/EBGaramond), so the build does not depend on installed fonts. KOMA
+% headings use the sans family, so the main and sans families are both set to it.
+% Scale 1.097 makes its capital height match the sizes the layout was tuned with.
+% The Medium weight is used for the subtitle (series "mb").
+\setmainfont{EBGaramond-Regular}[
+    Path=../fonts/EBGaramond/,
+    Extension=.ttf,
+    Scale=1.097,
+    UprightFont=EBGaramond-Regular,
+    ItalicFont=EBGaramond-Italic,
+    BoldFont=EBGaramond-Bold,
+    BoldItalicFont=EBGaramond-BoldItalic,
+    FontFace={mb}{n}{EBGaramond-Medium},
+]
+\setsansfont{EBGaramond-Regular}[
+    Path=../fonts/EBGaramond/,
+    Extension=.ttf,
+    Scale=1.097,
+    UprightFont=EBGaramond-Regular,
+    ItalicFont=EBGaramond-Italic,
+    BoldFont=EBGaramond-Bold,
+    BoldItalicFont=EBGaramond-BoldItalic,
+    FontFace={mb}{n}{EBGaramond-Medium},
+]
