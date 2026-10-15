@@ -41,10 +41,12 @@
 ]
 
 % High Spirited, a handwritten font (free for personal use, see its LICENSE.txt),
-% used for the playful "of" of the title. Scale 1.69 makes it match the height of
-% the title's lowercase letters.
+% used for the playful "of" of the title. Scale 1.6 sizes it to sit with
+% the title's lowercase letters. The font has one weight, so a slightly bolder
+% one is faked to match the bold title.
 \newfontfamily\handwrittenfont{HighSpirited}[
     Path=../fonts/HighSpirited/,
     Extension=.ttf,
-    Scale=1.69,
+    Scale=1.6,
+    AutoFakeBold=1.2,
 ]
