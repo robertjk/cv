@@ -23,6 +23,16 @@
     }
 }
 
+% Space after the subtitle, before the first section, relative to the natural gap
+% between paragraphs. Negative values pull the first section closer. It separates
+% the heading (title and subtitle) from the rest of the document.
+\newlength{\subtitleskip}
+\setlength{\subtitleskip}{-0.3mm}
+
+% Font of the subtitle. Medium weight (500) sits between regular text and the bold
+% title. Redefine to restyle it.
+\newcommand{\subtitlestyle}{\fontseries{mb}\fontsize{11}{13.5}\selectfont}
+
 % Subtitle of the document, displayed right below the title
 %
 % Arguments:
@@ -31,13 +41,11 @@
     \vspace{-1.5mm}
     {
         \raggedleft
-        % Medium weight (500) sits between regular text and the bold title
-        \fontseries{mb}
-        \fontsize{11}{13.5}\selectfont
+        \subtitlestyle
         #1
         \par
     }
-    \vspace{-2.5mm}
+    \vspace{\subtitleskip}
 }
 
 % Separator between the items of a list written inline: a middle dot. The spaces
