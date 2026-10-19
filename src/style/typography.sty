@@ -5,12 +5,11 @@
 % Font loading by file, for XeLaTeX
 \RequirePackage{fontspec}
 
-
-% Use EB Garamond (SIL Open Font License) for all text. The font files live in the
-% repo (fonts/EBGaramond), so the build does not depend on installed fonts. KOMA
-% headings use the sans family, so the main and sans families are both set to it.
-% Scale 1.097 makes its capital height match the sizes the layout was tuned with.
-% The Medium weight is used for the subtitle (series "mb").
+% Use EB Garamond (SIL Open Font License) for all text. The font files live in
+% the repo (fonts/EBGaramond), so the build does not depend on installed fonts.
+% KOMA headings use the sans family, so the main and sans families are both set
+% to it. Scale 1.097 makes its capital height match the sizes the layout was
+% tuned with. The Medium weight is used for the subtitle (series "mb").
 %
 % It was chosen from the following fonts. Noting them down, as they might come
 % useful in the future:
@@ -19,7 +18,7 @@
 % - Tw Cen MT,
 % - Montserrat,
 % - Source Serif 4
-\setmainfont{EBGaramond-Regular}[
+\defaultfontfeatures[EBGaramond-Regular]{
     Path=../fonts/EBGaramond/,
     Extension=.ttf,
     Scale=1.097,
@@ -28,22 +27,14 @@
     BoldFont=EBGaramond-Bold,
     BoldItalicFont=EBGaramond-BoldItalic,
     FontFace={mb}{n}{EBGaramond-Medium},
-]
-\setsansfont{EBGaramond-Regular}[
-    Path=../fonts/EBGaramond/,
-    Extension=.ttf,
-    Scale=1.097,
-    UprightFont=EBGaramond-Regular,
-    ItalicFont=EBGaramond-Italic,
-    BoldFont=EBGaramond-Bold,
-    BoldItalicFont=EBGaramond-BoldItalic,
-    FontFace={mb}{n}{EBGaramond-Medium},
-]
+}
+\setmainfont{EBGaramond-Regular}
+\setsansfont{EBGaramond-Regular}
 
-% High Spirited, a handwritten font (free for personal use, see its LICENSE.txt),
-% used for the playful "of" of the title. Scale 1.6 sizes it to sit with
-% the title's lowercase letters. The font has one weight, so a slightly bolder
-% one is faked to match the bold title.
+% High Spirited, a handwritten font (free for personal use, see its
+% LICENSE.txt), used for the playful "of" of the title. Scale 1.6 sizes it to
+% sit with the title's lowercase letters. The font has one weight, so a slightly
+% bolder one is faked to match the bold title.
 \newfontfamily\handwrittenfont{HighSpirited}[
     Path=../fonts/HighSpirited/,
     Extension=.ttf,

@@ -1,13 +1,21 @@
 % Extensions to LaTeX: the commands and environments that the document is
 % written with
+%
+% The file goes from the top of the document to the bottom: the heading, the
+% section lists (with the inline lists they contain), and the job entries (each
+% consisting of a header, a list and a technologies line). In each group the
+% command comes first, followed by the settings it uses.
 
 \ProvidesPackage{style/extensions}
 
 % Extends styling options for lists
 \RequirePackage{enumitem}
 
-% For scaling the bullet of job listings
+% For scaling the marker of the job entry list
 \RequirePackage{graphicx}
+
+
+% ---- Heading
 
 % Title of the document
 %
@@ -23,24 +31,15 @@
     }
 }
 
-% Playful handwritten word inside the title. It is raised a little, so that it sits
-% well on the line next to the Garamond, and followed by a little extra space.
+% Playful handwritten word inside the title. It is raised a little, so that it
+% sits well on the line next to the rest of the title, and followed by a little
+% extra space.
 %
 % Arguments:
 % 1: Word
-\newcommand{\titleplayful}[1]{%
+\newcommand{\documenttitlefunky}[1]{%
     {\handwrittenfont\raisebox{1.5pt}{#1}\kern0.12em}%
 }
-
-% Space after the subtitle, before the first section, relative to the natural gap
-% between paragraphs. Negative values pull the first section closer. It separates
-% the heading (title and subtitle) from the rest of the document.
-\newlength{\subtitleskip}
-\setlength{\subtitleskip}{-0.3mm}
-
-% Font of the subtitle. Medium weight (500) sits between regular text and the bold
-% title. Redefine to restyle it.
-\newcommand{\subtitlestyle}{\fontseries{mb}\fontsize{11}{13.5}\selectfont}
 
 % Subtitle of the document, displayed right below the title
 %
@@ -54,27 +53,21 @@
         #1
         \par
     }
-    \vspace{\subtitleskip}
+    \vspace{\subtitleendgap}
 }
 
-% Separator between the items of a list written inline: a middle dot. The spaces
-% on both sides are equal and stretch equally in justified text, so the dot stays
-% centered between the items. Only the space after the dot may break, so that a
-% line never starts with a dot.
-\newcommand{\listsep}{%
-    \nobreak\hskip 0.3em plus 0.15em minus 0.05em\relax
-    \textperiodcentered
-    \hskip 0.3em plus 0.15em minus 0.05em\relax
-}
+% Font of the subtitle. Medium weight (500) sits between regular text and the
+% bold title. Redefine to restyle it.
+\newcommand{\subtitlestyle}{\fontseries{mb}\fontsize{11}{13.5}\selectfont}
 
-% Width of the left column of a section list (dates, subsection titles), and the
-% space between it and the contents. Used by the list and by the item labels, so
-% that they always stay consistent. The widest label is a date range, about
-% 35.4mm wide.
-\newlength{\sectionlabelwidth}
-\setlength{\sectionlabelwidth}{42mm}
-\newlength{\sectionlabelsep}
-\setlength{\sectionlabelsep}{5mm}
+% Space after the subtitle, before the first section, relative to the natural
+% gap between paragraphs. Negative values pull the first section closer. It
+% separates the heading (title and subtitle) from the rest of the document.
+\newlength{\subtitleendgap}
+\setlength{\subtitleendgap}{-0.3mm}
+
+
+% ---- Section lists
 
 % List creating layout of each section
 \newenvironment
@@ -82,9 +75,11 @@
     {
         \begin{description}[
             align=right,
-            labelwidth=\sectionlabelwidth,
-            labelsep=\sectionlabelsep,
-            leftmargin=\dimexpr\sectionlabelwidth+\sectionlabelsep\relax,
+            labelwidth=\sectionlistlabelwidth,
+            labelsep=\sectionlistlabelgap,
+            leftmargin=\dimexpr
+                \sectionlistlabelwidth+\sectionlistlabelgap
+            \relax,
             itemsep=2mm,
             parsep=0mm
         ]
@@ -93,18 +88,18 @@
         \end{description}
     }
 
-% Single item (child) of section list
+% Single item (row) of section list
 %
 % Arguments:
-% 1: Subsection title
-% 2: Subsection contents
+% 1: Label (e.g. subsection title)
+% 2: Contents
 \newcommand{\sectionlistitem}[2]{
     \item[
         % Extra environment needed to properly parse [arg] to parbox
         {
             % 0mm height, so that it doesn't affect the layout by
             % increasing the line height
-            \parbox[t][0mm]{\sectionlabelwidth}{
+            \parbox[t][0mm]{\sectionlistlabelwidth}{
                 \raggedleft
                 #1
             }
@@ -112,60 +107,71 @@
     ] #2
 }
 
-% Vertical rhythm of a job: the space between the job title and its listing is
-% the same as the space between the listing and the technologies line, measured
-% from the baseline of one line to the top of the lowercase letters of the next
-% (about 5.6mm). Both are larger than the space between bullets (about 4.2mm), and
-% smaller than the space after the job, so each part reads as grouped with its own
-% job. The technologies line is set smaller, so it needs the extra gap to match.
-\newlength{\jobtitlegap}
-\setlength{\jobtitlegap}{0.7mm}
-\newlength{\technologiesgap}
-\setlength{\technologiesgap}{0.9mm}
-\newlength{\jobendgap}
-\setlength{\jobendgap}{4.4mm}
+% Width of the left column of a section list (dates, subsection titles), and the
+% space between it and the contents. Used by the list and by the item labels, so
+% that they always stay consistent. The widest label is a date range, about
+% 35.4mm wide.
+\newlength{\sectionlistlabelwidth}
+\setlength{\sectionlistlabelwidth}{42mm}
+\newlength{\sectionlistlabelgap}
+\setlength{\sectionlistlabelgap}{5mm}
 
-% Special type of \sectionlistitem, which is a job description
+% Separator between the items of a list written inline: a middle dot. The
+% spaces on both sides are equal and stretch equally in justified text, so the
+% dot stays centered between the items. Only the space after the dot may break,
+% so that a line never starts with a dot.
+\newcommand{\inlinesep}{%
+    \nobreak\hskip 0.3em plus 0.15em minus 0.05em\relax
+    \textperiodcentered
+    \hskip 0.3em plus 0.15em minus 0.05em\relax
+}
+
+
+% ---- Job entries
+
+% Single job: a section list item with the job header, followed by the contents
+% of the job (its list and technologies line)
 %
 % Arguments:
 % 1: Job date
 % 2: Job position
 % 3: Company name
 % 4: Company location
-% 5: Description (rest of contents)
-\newcommand{\sectionlistitemjob}[5]{
+% 5: Contents (list and technologies)
+\newcommand{\jobentry}[5]{
     \sectionlistitem
         {#1}
         {
             \textbf{#2} at \textbf{#3} (\emph{#4})
-            \par\vspace{\jobtitlegap}
+            \par\vspace{\jobentryheadergap}
             #5
-            \vspace{\jobendgap}
+            \vspace{\jobentrygap}
         }
 }
 
-\newcommand{\bulletsmall}[1][0.7]{\mathbin{\vcenter{\hbox{\scalebox{#1}{$\bullet$}}}}}
+% Vertical rhythm of a job: the space below the job header is the same as the
+% space below the list, measured from the baseline of one line to the top of the
+% lowercase letters of the next (about 5.6mm). Both are larger than the space
+% between list items (about 4.2mm), and smaller than the space below the whole
+% entry, so each part reads as grouped with its own job. The technologies line
+% is set smaller, so it needs the extra gap to match.
+\newlength{\jobentryheadergap}
+\setlength{\jobentryheadergap}{0.7mm}
+\newlength{\jobentrylistgap}
+\setlength{\jobentrylistgap}{0.9mm}
+\newlength{\jobentrygap}
+\setlength{\jobentrygap}{4.4mm}
 
-% Indents of a job listing, relative to the job title: where the center of the
-% bullet is (measured: the bullet is about 0.95mm wide and sits right-aligned in
-% its 4mm label box) and where the text of the bullets starts. The technologies
-% line is aligned to the bullets, so adjust \joblistingbulletcenter if the bullet
-% or its label box changes.
-\newlength{\joblistingbulletcenter}
-\setlength{\joblistingbulletcenter}{3.36mm}
-\newlength{\joblistingindent}
-\setlength{\joblistingindent}{6mm}
-
-% List listing details of one job
+% Bulleted list of what was done in one job
 \newenvironment
-    {joblisting}
+    {jobentrylist}
     {
         \begin{itemize}[
-            label=$\bulletsmall$,
+            label=$\jobentrylistmarker$,
             topsep=1.5mm,
             labelwidth=4mm,
             labelsep=2mm,
-            leftmargin=\joblistingindent,
+            leftmargin=\jobentrylistindent,
             itemsep=1.5mm,
             parsep=0mm
         ]
@@ -174,36 +180,56 @@
         \end{itemize}
     }
 
-% Style of the technologies line of a job. Redefine to restyle all of them.
-\newcommand{\technologiesstyle}{\raggedright\small\fontseries{mb}\selectfont}
-
-% Width of a typical first letter of the technologies line (a capital P, which sits
-% in the middle of the real first letters: J 1.2mm, P 2.0mm, T 2.4mm, R 2.5mm), used
-% to center that letter under the center of the bullets above.
-\newlength{\technologiesinitialwidth}
-
-% Left indent of the technologies line, relative to the job title. By default the
-% center of a typical first letter sits under the center of the bullets. Redefine
-% it as \joblistingindent to align the line with the text of the bullets instead.
-\newcommand{\technologiesindent}{%
-    \dimexpr\joblistingbulletcenter-0.5\technologiesinitialwidth\relax
+% Marker symbol of the job entry list (a bullet), scaled down
+%
+% Arguments:
+% 1: (optional) Scale of the standard bullet
+\newcommand{\jobentrylistmarker}[1][0.7]{%
+    \mathbin{\vcenter{\hbox{\scalebox{#1}{$\bullet$}}}}%
 }
 
-% Technologies used in a job, printed as plain text below its job listing. The
-% first letter is centered under the bullets above, as a typical capital would be,
-% and the lines that follow share the same left edge. Tool names are never
+% Center of the marker and start of the text of the list items, relative to the
+% job header. The marker is about 0.95mm wide and sits right-aligned in its 4mm
+% label box. The technologies line is aligned to the markers, so adjust
+% \jobentrylistmarkercenter if the marker or its label box changes.
+\newlength{\jobentrylistmarkercenter}
+\setlength{\jobentrylistmarkercenter}{3.36mm}
+\newlength{\jobentrylistindent}
+\setlength{\jobentrylistindent}{6mm}
+
+% Technologies used in a job, printed as plain text below its list. The first
+% letter is centered under the markers above, as a typical capital would be, and
+% the lines that follow share the same left edge. Tool names are never
 % hyphenated.
 %
 % Arguments:
-% 1: Technologies, separated with \listsep
-\newcommand{\jobtechnologies}[1]{%
-    \par\vspace{-\parskip}\vspace{\technologiesgap}%
+% 1: Technologies, separated with \inlinesep
+\newcommand{\jobentrytechnologies}[1]{%
+    \par\vspace{-\parskip}\vspace{\jobentrylistgap}%
     {%
-        \technologiesstyle
-        \settowidth{\technologiesinitialwidth}{P}%
-        \leftskip=\technologiesindent
+        \jobentrytechnologiesstyle
+        \settowidth{\jobentrytechnologiesinitialwidth}{P}%
+        \leftskip=\jobentrytechnologiesindent
         \hyphenpenalty=10000 \exhyphenpenalty=10000
         \emergencystretch=2em
         #1\par
     }%
 }
+
+% Style of the technologies line of a job. Redefine to restyle all of them.
+\newcommand{\jobentrytechnologiesstyle}{%
+    \raggedright\small\fontseries{mb}\selectfont%
+}
+
+% Left indent of the technologies line, relative to the job header. By default
+% the center of a typical first letter sits under the center of the markers.
+% Redefine it as \jobentrylistindent to align the line with the text of the list
+% items instead.
+\newcommand{\jobentrytechnologiesindent}{%
+    \dimexpr\jobentrylistmarkercenter-0.5\jobentrytechnologiesinitialwidth\relax
+}
+
+% Width of a typical first letter of the technologies line (a capital P, which
+% sits in the middle of the real first letters: J 1.2mm, P 2.0mm, T 2.4mm,
+% R 2.5mm), used to center that letter under the center of the markers.
+\newlength{\jobentrytechnologiesinitialwidth}
