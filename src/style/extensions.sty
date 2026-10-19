@@ -14,6 +14,9 @@
 % For scaling the marker of the job entry list
 \RequirePackage{graphicx}
 
+% For preventing page breaks inside some blocks
+\RequirePackage{needspace}
+
 
 % ---- Heading
 
@@ -139,6 +142,7 @@
 % 4: Company location
 % 5: Contents (list and technologies)
 \newcommand{\jobentry}[5]{
+    \needspace{6\baselineskip}
     \sectionlistitem
         {#1}
         {
