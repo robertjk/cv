@@ -27,7 +27,8 @@
     BoldFont=EBGaramond-Bold,
     BoldItalicFont=EBGaramond-BoldItalic,
 }
-\setmainfont{EBGaramond-Regular}[FontFace={mb}{n}{EBGaramond-Medium}]
+% Allow slightly tighter word spacing, so justified lines need fewer breaks
+\setmainfont{EBGaramond-Regular}[FontFace={mb}{n}{EBGaramond-Medium}, WordSpace={1,1,1.3}]
 \setsansfont{EBGaramond-Regular}[FontFace={mb}{n}{EBGaramond-Medium}]
 
 % High Spirited, a handwritten font (free for personal use, see its
@@ -40,3 +41,7 @@
     Scale=1.6,
     AutoFakeBold=1.2,
 ]
+
+% Prefer slightly looser lines over hyphenation or text overflowing the margin
+\setlength{\emergencystretch}{1em}
+\hyphenpenalty=10000
